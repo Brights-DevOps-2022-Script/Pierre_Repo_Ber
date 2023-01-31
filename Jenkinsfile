@@ -1,12 +1,7 @@
 pipeline {
-    agent { 
-        kubernetes { 
-            label 'app' 
-        } 
-    }
-}   environment{
+    agent any
+    environment{
         ACR_CRED = credentials('acr_creds')
-
     }
     stages {
         stage('build') {
@@ -16,3 +11,4 @@ pipeline {
             }    
         }
     }
+}
