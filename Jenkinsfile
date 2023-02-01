@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'alpine:3.12'
+        }
+    }
     environment{
         ACR_CRED = credentials('acr_creds')
         KUB_CONF = credentials('k8s_config')
