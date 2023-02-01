@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh 'kubectl --kubeconfig=$KUB_CONF get nodes'
                 //sh 'kubectl --kubeconfig=$KUB_CONF delete namespace pierre-space-second'
-                //sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space-second'
+                sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space-second'
                 sh 'kubectl --kubeconfig=$KUB_CONF apply -f nginx-deployment.yml -n pierre-space-second'
                 sh 'kubectl --kubeconfig=$KUB_CONF get namespaces'
             }    
