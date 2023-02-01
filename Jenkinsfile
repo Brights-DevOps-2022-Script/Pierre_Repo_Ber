@@ -2,7 +2,7 @@ pipeline {
     agent any 
     environment{
         ACR_CRED = credentials('acr_creds')
-        KUB_CONF = credentials('k8s_config')
+        KUBECONFIG = credentials('k8s_config')
     }
     stages {
         stage('ACR Login') {
@@ -17,11 +17,11 @@ pipeline {
                 }
             }
             steps{
-                sh 'kubectl --kubeconfig=$KUB_CONF get nodes'
+                sh 'kubectl get nodes'
                 //sh 'kubectl --kubeconfig=$KUB_CONF delete namespace pierre-space-second'
                 //sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space-second'
-                sh 'kubectl --kubeconfig=$KUB_CONF apply -f nginx-deployment.yml -n pierre-space-second'
-                sh 'kubectl --kubeconfig=$KUB_CONF get namespaces'
+                sh 'kubectl apply -f nginx-deployment.yml -n pierre-space-second'
+                sh 'kubectl get namespaces'
             }    
         }
     }   
