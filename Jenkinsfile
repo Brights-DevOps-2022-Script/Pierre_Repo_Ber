@@ -11,12 +11,12 @@ pipeline {
             }
         }
         stage('deploy') {
-            steps {
-                agent{
-                    docker{
-                        image 'alpine/k8s:1.23.16'
-                    }
+            agent {
+                docker {
+                    image 'alpine/k8s:1.23.16'
                 }
+            }
+            steps{
                 sh 'kubectl --kubeconfig=$KUB_CONF get nodes'
                 //sh 'kubectl --kubeconfig=$KUB_CONF delete namespace pierre-space-second'
                 //sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space-second'
