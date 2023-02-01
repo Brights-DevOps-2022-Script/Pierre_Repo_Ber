@@ -1,7 +1,16 @@
 pipeline {
     agent {
         docker {
-            image 'gcr.io/cloud-builders/kubectl'
+            image 'docker:pierre'
+        }
+    }
+    stages {
+        stage("Build Docker Image") {
+            steps {
+                script {
+                    def customImage = docker.build("myimage")
+                }
+            }
         }
     }
     environment{
@@ -10,12 +19,8 @@ pipeline {
     }
     stages {
         stage('ACR Login'){
-            agent {
-                any{
-                steps{
+            steps{
                 sh 'docker login devops2022.azurecr.io -u $ACR_CRED_USR -p $ACR_CRED_PSW'
-                }
-            }
             }
         }
         stage('deploy') {
