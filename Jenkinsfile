@@ -15,7 +15,6 @@ pipeline {
             agent {
                 docker {
                     image 'gcr.io/cloud-builders/kubectl'
-                    arg '-e KUB_CONF'
                 }
             }
             steps{
