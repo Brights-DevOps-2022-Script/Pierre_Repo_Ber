@@ -1,19 +1,13 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:dind'
-        }
-    }
+    agent any 
     environment{
         ACR_CRED = credentials('acr_creds')
         KUB_CONF = credentials('k8s_config')
     }
     stages {
-        stage("Build Docker Image") {
-            steps {
-                script {
-                    def customImage = docker.build("myimage")
-                }
+        stage('Build') {
+            docker{
+                image 'alpine/k8s:1.23.16'
             }
         } 
         stage('ACR Login'){
