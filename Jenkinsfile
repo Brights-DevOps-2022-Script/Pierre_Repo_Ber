@@ -1,11 +1,11 @@
 pipeline {
-    agent any 
     environment{
         ACR_CRED = credentials('acr_creds')
         KUB_CONF = credentials('k8s_config')
     }
     stages {
         stage('ACR Login') {
+            agent any
             steps{
                 sh 'docker login devops2022.azurecr.io -u $ACR_CRED_USR -p $ACR_CRED_PSW'
             }
