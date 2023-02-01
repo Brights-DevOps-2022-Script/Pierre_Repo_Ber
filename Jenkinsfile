@@ -12,9 +12,9 @@ pipeline {
         stage("Build Docker Image") {
             steps {
                 script {
+                    sh 'systemctl start docker'
                     def customImage = docker.build("myimage")
                 }
-                sh 'docker run -d -v /var/run/docker.sock:/var/run/docker.sock myimage'
             }
         } 
         stage('ACR Login'){
