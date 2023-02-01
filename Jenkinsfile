@@ -1,4 +1,5 @@
 pipeline {
+    agent any 
     environment{
         ACR_CRED = credentials('acr_creds')
         KUB_CONF = credentials('k8s_config')
