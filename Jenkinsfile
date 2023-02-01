@@ -20,9 +20,10 @@ pipeline {
                 //sh 'kubectl --kubeconfig=$KUB_CONF delete namespace pierre-space-second'
                 //sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space-second'
                 withEnv(["VAR_NAME=KUB_CONF"]) {
-                sh 'echo $KUB_CONF'
-                sh 'kubectl --kubeconfig=$VAR_NAME apply -f nginx-deployment.yml -n pierre-space-second'
-                sh 'kubectl --kubeconfig=$VAR_NAME get namespaces'
+                    sh 'echo $KUB_CONF'
+                    sh 'kubectl --kubeconfig=$VAR_NAME apply -f nginx-deployment.yml -n pierre-space-second'
+                    sh 'kubectl --kubeconfig=$VAR_NAME get namespaces'
+                }
             }    
         }
     }   
