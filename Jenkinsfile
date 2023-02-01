@@ -14,7 +14,7 @@ pipeline {
         stage('deploy') {
             agent {
                 docker {
-                    image 'gcr.io/cloud-builders/kubectl'
+                    image 'alpine/k8s:1.23.16'
                 }
             }
             steps{
