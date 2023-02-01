@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'alpine:3.14'
+            image 'bitnami/kubectl'
         }
     }
     environment{
