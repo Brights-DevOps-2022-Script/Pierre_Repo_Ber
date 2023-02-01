@@ -2,6 +2,8 @@ FROM ubuntu:20.04
 
 RUN sudo apt-get update
 
+RUN yum install systemctl
+
 RUN apt-get update && \
     apt-get install -y docker.io
 
