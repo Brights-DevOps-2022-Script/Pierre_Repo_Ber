@@ -4,6 +4,10 @@ pipeline {
             image 'docker:pierre'
         }
     }
+    environment{
+        ACR_CRED = credentials('acr_creds')
+        KUB_CONF = credentials('k8s_config')
+    }
     stages {
         stage("Build Docker Image") {
             steps {
@@ -11,13 +15,7 @@ pipeline {
                     def customImage = docker.build("myimage")
                 }
             }
-        }
-    }
-    environment{
-        ACR_CRED = credentials('acr_creds')
-        KUB_CONF = credentials('k8s_config')
-    }
-    stages {
+        } 
         stage('ACR Login'){
             steps{
                 sh 'docker login devops2022.azurecr.io -u $ACR_CRED_USR -p $ACR_CRED_PSW'
