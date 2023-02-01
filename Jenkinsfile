@@ -5,10 +5,12 @@ pipeline {
         KUB_CONF = credentials('k8s_config')
     }
     stages {
-        stage('build') {
+        stage('deploy') {
             steps {
-                sh 'az login --service-principal -u $ACR_CRED_CLIENT_ID -p $KUB_CONF_SECRET'
-                sh 'apply -f deployment.yml -f service.yml -f load-balancer.yml -n pierre-space'
+                sh 'docker login -u $ACR_CRED_USR -p $ACR_CRED_PSW'
+                sh 'kubectl --kubeconfig=$KUB_CONF get nodes'
+                sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space'
+                sh 'kubectl --kubeconfig=$KUB_CONF apply -f deployment.yml -f service.yml -f load-balancer.yml -n pierre-space'
             }    
         }
     }
