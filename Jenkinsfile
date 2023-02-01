@@ -4,11 +4,11 @@ pipeline {
             image 'gcr.io/cloud-builders/kubectl'
         }
     }
-    agent any{
         environment{
             ACR_CRED = credentials('acr_creds')
             KUB_CONF = credentials('k8s_config')
         }
+    agent any{
         stages {
             stage('ACR Login'){
                 steps{
