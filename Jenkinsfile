@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'bitnami/kubectl'
+            args '--entrypoint=cat'
         }
     }
     environment{
