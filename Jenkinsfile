@@ -9,10 +9,14 @@ pipeline {
             agent{
                 docker{
                     image 'alpine/k8s:1.23.16'
+
                 }
             }
+            steps{
+                sh ''
+            }
         } 
-        stage('ACR Login'){
+        stage('ACR Login') {
             steps{
                 sh 'docker login devops2022.azurecr.io -u $ACR_CRED_USR -p $ACR_CRED_PSW'
             }
