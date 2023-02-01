@@ -6,8 +6,10 @@ pipeline {
     }
     stages {
         stage('Build') {
-            docker{
-                image 'alpine/k8s:1.23.16'
+            agent{
+                docker{
+                    image 'alpine/k8s:1.23.16'
+                }
             }
         } 
         stage('ACR Login'){
