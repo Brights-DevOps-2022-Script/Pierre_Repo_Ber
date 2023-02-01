@@ -12,7 +12,6 @@ pipeline {
         stage("Build Docker Image") {
             steps {
                 script {
-                    sh 'systemctl start docker'
                     def customImage = docker.build("myimage")
                 }
             }
