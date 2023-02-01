@@ -5,17 +5,6 @@ pipeline {
         KUB_CONF = credentials('k8s_config')
     }
     stages {
-        stage('Build') {
-            agent{
-                docker{
-                    image 'alpine/k8s:1.23.16'
-
-                }
-            }
-            steps{
-                sh ''
-            }
-        } 
         stage('ACR Login') {
             steps{
                 sh 'docker login devops2022.azurecr.io -u $ACR_CRED_USR -p $ACR_CRED_PSW'
@@ -23,6 +12,11 @@ pipeline {
         }
         stage('deploy') {
             steps {
+                agent{
+                    docker{
+                        image 'alpine/k8s:1.23.16'
+                    }
+                }
                 sh 'kubectl --kubeconfig=$KUB_CONF get nodes'
                 //sh 'kubectl --kubeconfig=$KUB_CONF delete namespace pierre-space-second'
                 //sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space-second'
