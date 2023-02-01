@@ -6,7 +6,6 @@ pipeline {
     }
     stages {
         stage('ACR Login') {
-            agent any
             steps{
                 sh 'docker login devops2022.azurecr.io -u $ACR_CRED_USR -p $ACR_CRED_PSW'
             }
