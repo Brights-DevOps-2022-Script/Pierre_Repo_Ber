@@ -42,7 +42,6 @@ pipeline {
                     LOAD_BALANCER_IP=output.split("\n")[1].split()[3].toString()
                     echo "IP: http://${LOAD_BALANCER_IP}"
                     sh 'xdg-open http://${LOAD_BALANCER_IP}'
-                    
                 }
             }
         }
