@@ -28,9 +28,10 @@ pipeline {
             steps{
                 //sh 'kubectl --kubeconfig=$KUB_CONF delete namespace pierre-space-second'
                 //sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space-second'
-                sh 'kubectl --kubeconfig=$KUB_CONF apply -f nginx.yml -n pierre-space-second'
+                // SED ..................
+                sh 'kubectl --kubeconfig=$KUB_CONF apply -f nginx.yml'
                 sh 'kubectl --kubeconfig=$KUB_CONF get namespaces'   
-                sh 'kubectl set image -n pierre-space-second deployment/nginx-deployment-pierre nginx=devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT --server=20.113.26.169'             
+                sh 'kubectl --kubeconfig=$KUB_CONF set image -n pierre-space-second deployment/nginx-deployment-pierre nginx=devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'             
             }    
         }
     }   
