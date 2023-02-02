@@ -32,7 +32,8 @@ pipeline {
                 sh 'kubectl --kubeconfig=$KUB_CONF apply -f nginx.yml'
                 sh 'kubectl --kubeconfig=$KUB_CONF get namespaces'   
                 sh 'kubectl --kubeconfig=$KUB_CONF set image -n pierre-space-second deployment/nginx-deployment-pierre nginx=devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'             
-            }    
+                sh 'kubectl --kubeconfig=$KUB_CONF get all -n namespaces'
+                sh 'kubectl expose deployment nginx --type=LoadBalancer --name=load-balancer'
         }
     }   
 }
