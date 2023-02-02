@@ -16,12 +16,6 @@ pipeline {
                 sh 'docker rmi devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'
             }
         }
-        stage('Test') {
-            steps {
-                sh 'docker rmi devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'
-                sh 'docker --version'
-            }
-        }
         stage('Deploy') {
             agent {
                 docker {
