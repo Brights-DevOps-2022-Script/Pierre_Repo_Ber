@@ -38,7 +38,8 @@ pipeline {
                 sh 'apk update && apk add xdg-utils'
                 
                 script{
-                    LOAD_BALANCER_IP=$(kubectl --kubeconfig=$KUB_CONF get service load-balancer -n pierre-space-second -o jsonpath="{.status.loadBalancer.ingress[0].ip.toString()}")
+                    def output = sh(script: 'kubectl --kubeconfig=$KUB_CONF get service load-balancer -n pierre-space-second', returnStdout: true)
+                    LOAD_BALANCER_IP=output.split("\n")[1].split()[3].toString()
                     echo "${LOAD_BALANCER_IP}"
                     open "http://${LOAD_BALANCER_IP}"
                 }
