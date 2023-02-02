@@ -9,7 +9,20 @@ pipeline {
                 sh 'docker login devops2022.azurecr.io -u $ACR_CRED_USR -p $ACR_CRED_PSW'
             }
         }
-        stage('deploy') {
+        stage('Image Building') {
+            steps {
+                sh 'docker build -t devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT .'
+                sh 'docker push devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'
+                sh 'docker rmi devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker rmi devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'
+                sh 'docker --version'
+            }
+        }
+        stage('Deploy') {
             agent {
                 docker {
                     image 'alpine/k8s:1.23.16'
@@ -23,7 +36,8 @@ pipeline {
                 //sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space-second'
                 sh 'echo $KUB_CONF'
                 sh 'kubectl --kubeconfig=$KUB_CONF apply -f nginx-deployment.yml -n pierre-space-second'
-                sh 'kubectl --kubeconfig=$KUB_CONF get namespaces'                
+                sh 'kubectl --kubeconfig=$KUB_CONF get namespaces'   
+                sh 'kubectl set image -n pierre-space-second deployment/nginx-deployment nginx=devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'             
             }    
         }
     }   

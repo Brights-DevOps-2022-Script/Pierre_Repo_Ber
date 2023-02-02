@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: devops.azurecr.io/pierre/nginx_pierre
+        image: devops.azurecr.io/nginx_pierre:${GIT_COMMIT}
         ports:
         - containerPort: 80
 ---
