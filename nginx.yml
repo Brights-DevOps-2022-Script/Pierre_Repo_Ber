@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: nginx-deployment-pierre
   namespace: pierre-space-second
 spec:
   replicas: 1
@@ -22,23 +22,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
-  namespace: pierre-space-second
-  labels:
-    app: nginx
-spec:
-  selector:
-    app: nginx
-  ports:
-  - name: http
-    port: 80
-    targetPort: 80
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
   name: load-balancer
+  namespace: pierre-space-second
 spec:
   selector:
       app: nginx
