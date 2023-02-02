@@ -36,10 +36,13 @@ pipeline {
                 sh 'kubectl --kubeconfig=$KUB_CONF get all -n pierre-space-second'
                 sh 'kubectl --kubeconfig=$KUB_CONF get services -n pierre-space-second'
                 sh 'apk update && apk add xdg-utils'
-                sh 'LOAD_BALANCER_IP=$(kubectl --kubeconfig=$KUB_CONF get service load-balancer -n pierre-space-second -o jsonpath="{.status.loadBalancer.ingress[0].ip.toString()}")'
-                sh 'echo "${LOAD_BALANCER_IP}"'
-                sh 'open "http://${LOAD_BALANCER_IP}"'
-                //sh 'kubectl --kubeconfig=$KUB_CONF expose deployment nginx-deployment-pierre -n pierre-space-second'
+                
+                script{
+                    LOAD_BALANCER_IP=$(kubectl --kubeconfig=$KUB_CONF get service load-balancer -n pierre-space-second -o jsonpath="{.status.loadBalancer.ingress[0].ip.toString()}")
+                    echo "${LOAD_BALANCER_IP}"
+                    open "http://${LOAD_BALANCER_IP}"
+                    //sh 'kubectl --kubeconfig=$KUB_CONF expose deployment nginx-deployment-pierre -n pierre-space-second'
+                }
             }
         }
     }   
