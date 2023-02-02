@@ -42,7 +42,7 @@ pipeline {
         stage('Export load balancer IP and open URL in Web Browser') {
             agent any
                 steps {
-                    sh 'export LOAD_BALANCER_IP=$(kubectl --kubeconfig=$KUB_CONF get service load-balancer -n pierre-space-second -o jsonpath='{.status.loadBalancer.ingress[0].ip}')'
+                    sh 'export LOAD_BALANCER_IP=$(kubectl --kubeconfig=$KUB_CONF get service load-balancer -n pierre-space-second -o jsonpath="{.status.loadBalancer.ingress[0].ip}")'
                     sh 'open http://$LOAD_BALANCER_IP &'
                 }
         }
