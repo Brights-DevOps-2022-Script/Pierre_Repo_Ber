@@ -41,7 +41,8 @@ pipeline {
                     def output = sh(script: 'kubectl --kubeconfig=$KUB_CONF get service load-balancer -n pierre-space-second', returnStdout: true)
                     LOAD_BALANCER_IP=output.split("\n")[1].split()[3].toString()
                     echo "IP: http://${LOAD_BALANCER_IP}"
-                    xdg-open http://$LOAD_BALANCER_IP
+                    sh 'xdg-open http://${LOAD_BALANCER_IP}'
+                    
                 }
             }
         }
