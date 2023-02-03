@@ -27,20 +27,21 @@ pipeline {
                  KUB_CONF = credentials('k8s_config')
             }
             steps{
-                //sh 'kubectl --kubeconfig=$KUB_CONF delete namespace pierre-space-second'
-                //sh 'kubectl --kubeconfig=$KUB_CONF create namespace pierre-space-second'
-                // SED ..................
-                sh 'kubectl --kubeconfig=$KUB_CONF apply -f nginx.yml'
-                sh 'kubectl --kubeconfig=$KUB_CONF get namespaces'   
-                sh 'kubectl --kubeconfig=$KUB_CONF set image -n pierre-space-second deployment/nginx-deployment-pierre nginx=devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'             
-                sh 'kubectl --kubeconfig=$KUB_CONF get all -n pierre-space-second'
-                sh 'kubectl --kubeconfig=$KUB_CONF get services -n pierre-space-second'
-                sh 'apk update && apk add xdg-utils'
+                withKubeConfig([credentialsId: 'k8s_config']){
+                    //sh 'kubectl delete namespace pierre-space-second'
+                    //sh 'kubectl create namespace pierre-space-second'
+                    // SED ..................
+                    sh 'kubectl apply -f nginx.yml'
+                    sh 'kubectl get namespaces'   
+                    sh 'kubectl set image -n pierre-space-second deployment/nginx-deployment-pierre nginx=devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'             
+                    sh 'kubectl get all -n pierre-space-second'
+                    sh 'kubectl get services -n pierre-space-second'
+                    sh 'apk update && apk add xdg-utils'
                 
-                script{
-                    def output = sh(script: 'kubectl --kubeconfig=$KUB_CONF get service load-balancer -n pierre-space-second', returnStdout: true)
-                    LOAD_BALANCER_IP=output.split("\n")[1].split()[3].toString()
-                    echo "IP: http://${LOAD_BALANCER_IP}"
+                    script{
+                        def output = sh(script: 'kubectl --kubeconfig=$KUB_CONF get service load-balancer -n pierre-space-second', returnStdout: true)
+                        LOAD_BALANCER_IP=output.split("\n")[1].split()[3].toString()
+                    }   echo "IP: http://${LOAD_BALANCER_IP}"
                 }
             }
         }
