@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: devops.azurecr.io/pierre/test:$BUILD_NUMBER
+        image: pierre/test:154
         ports:
         - containerPort: 80
 ---
