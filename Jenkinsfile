@@ -22,7 +22,6 @@ pipeline {
         stage('Image Pushing'){
             steps{
                 sh 'docker push devops2022.azurecr.io/pierre/test:$BUILD_NUMBER'
-                sh 'docker rmi devops2022.azurecr.io/pierre/nginx:$BUILD_NUMBER'
             }
         }
 
