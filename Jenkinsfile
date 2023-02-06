@@ -36,10 +36,8 @@ pipeline {
 
         stage('Update Deployment') {
             steps {
-                script{
-                    cd deployment
-                    sed -i 's/image: .*/image: pierre/test:$BUILD_NUMBER/' deployment/nginx.yaml
-                }
+                sh 'cd deployment'
+                sh 'sed -i "s/image: .*/image: pierre/test:$BUILD_NUMBER/" deployment/nginx.yaml'
             }
         }
 
