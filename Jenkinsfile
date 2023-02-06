@@ -2,6 +2,7 @@ pipeline {
     agent any 
     environment{
         ACR_CRED = credentials('acr_creds')
+        GIT_CRED = credentials('2eb747c4-f19f-4601-ab83-359462e62482')
     }
     stages {
         stage('ACR Login') {
@@ -48,7 +49,7 @@ pipeline {
                 sh 'git add deployment/nginx.yaml'
                 sh 'git commit -m "Update deployment with new image"'
                 sh 'git push origin main'
-                //sh("git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Brights-DevOps-2022-Script/Pierre_Repo_Ber.git HEAD:main")
+                sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/Pierre_Repo_Ber.git HEAD:main")
             }
         }
     
