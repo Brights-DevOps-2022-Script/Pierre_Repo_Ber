@@ -36,7 +36,7 @@ pipeline {
 
         stage('Update Deployment') {
             steps {
-                //sh 'cd K8s_pierre'
+                sh 'cd deployment'
                 sh 'sed -i "s/image: .*/image: pierre/test:$BUILD_NUMBER/" nginx.yaml'
             }
         }
