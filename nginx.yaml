@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment-pierre
-  namespace: pierre-space-second
 spec:
   replicas: 1
   selector:
@@ -15,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: devops.azurecr.io/nginx_pierre:${GIT_COMMIT}
+        image: devops.azurecr.io/pierre/test:$BUILD_NUMBER
         ports:
         - containerPort: 80
 ---
@@ -23,7 +22,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: load-balancer
-  namespace: pierre-space-second
 spec:
   selector:
       app: nginx
