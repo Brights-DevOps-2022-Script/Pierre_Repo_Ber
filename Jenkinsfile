@@ -28,7 +28,7 @@ pipeline {
 
         stage('Clone ManifestRepo'){
             steps {
-                sh 'git remote set-url origin https://$GIT_CRED_USR:GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd.git'
+                sh 'git remote set-url origin https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd.git'
                 sh 'git clone https://github.com/Brights-DevOps-2022-Script/argocd.git'
                 }
         }
