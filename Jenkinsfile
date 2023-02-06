@@ -27,7 +27,7 @@ pipeline {
 
         stage('Clone ManifestRepo'){
             steps {
-                sh 'git clone https://github.com/Brights-DevOps-2022-Script/argocd.git K8s_pierre'
+                sh 'git clone https://github.com/Brights-DevOps-2022-Script/argocd.git'
             }
         }
 
