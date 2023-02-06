@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script{
                     cd deployment
-                    sed -i "s/image: .*/image: pierre/test:$BUILD_NUMBER/" deployment/nginx.yaml
+                    sed -i 's/image: .*/image: pierre/test:$BUILD_NUMBER/' deployment/nginx.yaml
                 }
             }
         }
