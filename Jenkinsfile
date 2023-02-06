@@ -47,7 +47,7 @@ pipeline {
                 sh 'git config --global user.name "Pierre890"'
                 sh 'git add deployment/nginx.yaml'
                 sh 'git commit -m "Update deployment with new image"'
-                sh 'git push origin HEAD:master'
+                sh 'git push origin HEAD:main'
             }
         }
     
