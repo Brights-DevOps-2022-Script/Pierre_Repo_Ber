@@ -38,7 +38,8 @@ pipeline {
             steps {
                 sh 'cd deployment'
                 //sh 'sed -i "s/image: .*/image: pierre/test:$BUILD_NUMBER/" deployment/nginx.yaml'
-                sh 'awk "/image:/{sub(/image: .*/, \"image: pierre/test:$BUILD_NUMBER\")}; 1" deployment/nginx.yaml > temp.yaml && mv temp.yaml deployment/nginx.yaml'
+                awk '/image:/{sub(/image: .*/, "image: pierre/test:141")}; 1' deployment/nginx.yaml
+
             }
         }
 
