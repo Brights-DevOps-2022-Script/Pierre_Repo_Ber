@@ -26,18 +26,16 @@ pipeline {
             }
         }
 
-        //stage('Clone ManifestRepo'){
-            //steps {
-                //withCredentials([usernamePassword(credentialsId: '2eb747c4-f19f-4601-ab83-359462e62482', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                //sh 'git remote set-url origin https://Pierre890:{password}@github.com/{username}/project.git'
-                //sh 'git clone https://github.com/Brights-DevOps-2022-Script/argocd.git'
-                //}
-            //}
-        //}
+        stage('Clone ManifestRepo'){
+            steps {
+                sh 'git remote set-url origin https://$GIT_CRED_USR:GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd.git'
+                sh 'git clone https://github.com/Brights-DevOps-2022-Script/argocd.git'
+                }
+        }
 
         stage('Update Deployment') {
             steps {
-                sh 'cd deployment'
+                sh 'cd K8s_pierre'
                 sh 'sed -i "s|image: .*|image: pierre/test:$BUILD_NUMBER|" deployment/nginx.yaml'
             }
         }
@@ -48,7 +46,7 @@ pipeline {
                 sh 'git config --global user.name "Pierre890"'
                 sh 'git add deployment/nginx.yaml'
                 sh 'git commit -m "Update deployment with new image"'
-                //sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/Pierre_Repo_Ber.git HEAD:main")
+                sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd.git HEAD:main")
             }
         }
     
