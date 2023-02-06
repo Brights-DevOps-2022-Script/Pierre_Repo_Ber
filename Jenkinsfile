@@ -45,7 +45,7 @@ pipeline {
             steps {
                 sh 'git config --global user.email "pierfrancesco.elia89@gmail.com"'
                 sh 'git config --global user.name "Pierre890"'
-                sh 'git add nginx.yaml'
+                sh 'git add development/nginx.yaml'
                 sh 'git commit -m "Update deployment with new image"'
                 sh 'git push origin HEAD:master'
             }
