@@ -48,7 +48,7 @@ pipeline {
                 sh 'git config --global user.name "Pierre890"'
                 sh 'git add deployment/nginx.yaml'
                 sh 'git commit -m "Update deployment with new image"'
-                sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/Pierre_Repo_Ber.git HEAD:main")
+                //sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/Pierre_Repo_Ber.git HEAD:main")
             }
         }
     
