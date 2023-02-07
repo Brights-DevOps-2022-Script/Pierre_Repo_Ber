@@ -29,7 +29,7 @@ pipeline {
         stage('Update Deployment') {
             steps {
                 sh("git clone https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd-team1.git")
-                sh 'sed -i "s|image: .*|image: pierre/test:$BUILD_NUMBER|" Kub_pierre/nginx.yaml'
+                sh 'sed -i "s|image: .*|image: team1/test:$BUILD_NUMBER|" Kub_pierre/nginx.yaml'
                 sh 'git add Kub_pierre/nginx.yaml'
                 sh 'git commit -m "new deployment"'
                 sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd-team1.git HEAD:main")
