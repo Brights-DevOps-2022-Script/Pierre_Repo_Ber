@@ -28,16 +28,15 @@ pipeline {
 
         stage('Update Deployment') {
             steps {
-                //sh("git clone https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd-team1.git")
-                sh 'pwd'
-                sh 'cd ../..'
-                sh 'pwd'
+                sh("git clone https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd-team1.git")
+                sh 'cd argocd-team1'
                 sh 'sed -i "s|image: .*|image: team1/test:$BUILD_NUMBER|" Kub_pierre/nginx.yaml'
                 sh 'git add Kub_pierre/nginx.yaml'
                 sh 'git commit -m "new deployment"'
                 sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd-team1.git HEAD:main")
             }
-        }
+        }  
+
         //stage('Deploy') {
           //  agent {
             //    docker {
