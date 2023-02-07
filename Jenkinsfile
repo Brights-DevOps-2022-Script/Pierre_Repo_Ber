@@ -2,7 +2,6 @@ pipeline {
     agent any 
     environment{
         ACR_CRED = credentials('acr_creds')
-        GIT_CRED = credentials('2eb747c4-f19f-4601-ab83-359462e62482')
     }
     stages {
         stage('ACR Login') {
@@ -26,15 +25,17 @@ pipeline {
             }
         }
 
-        stage('Update Deployment') {
-            steps {
-                //sh("git clone https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd-team1.git argocd-team1-repo")
-                sh 'sed -i "s|image: .*|image: team1/test:$BUILD_NUMBER|" /var/lib/jenkins/workspace/github_orga_Pierre_Repo_Ber_main/argocd-team1/Kub_pierre/nginx.yaml'
-                sh 'git add /var/lib/jenkins/workspace/github_orga_Pierre_Repo_Ber_main/argocd-team1/Kub_pierre/nginx.yaml'
+        stage('Update image in deployment file') {
+            steps{  
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '2eb747c4-f19f-4601-ab83-359462e62482',  url: 'https://github.com/Brights-DevOps-2022-Script/argocd-team1.git']]])
+                withCredentials([usernamePassword(credentialsId: '2eb747c4-f19f-4601-ab83-359462e62482', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                sh 'sed -i "s|image: .*|image: devops2022.azurecr.io/team1/test:$BUILD_NUMBER|" Kub_pierre/nginx.yaml'
+                sh 'git add Kub_pierre/nginx.yaml' 
                 sh 'git commit -m "new deployment"'
-                sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd-team1.git HEAD:main")
+                sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Brights-DevOps-2022-Script/argocd-team1.git HEAD:main"   
+                }
             }
-        }  
+        }
 
         //stage('Deploy') {
           //  agent {
