@@ -29,9 +29,7 @@ pipeline {
         stage('Update Deployment') {
             steps {
                 sh 'cd ..'
-                sh 'pwd'
-                sh 'ls'
-                sh 'cd argocd-team1'
+                sh 'cd /var/lib/jenkins/workspace/github_orga_argocd-team1'
                 sh 'sed -i "s|image: .*|image: pierre/test:$BUILD_NUMBER|" Kub_pierre/nginx.yaml'
                 sh 'git add Kub_pierre/nginx.yaml'
                 sh 'git commit -m "new deployment"'
