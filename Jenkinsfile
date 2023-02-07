@@ -30,6 +30,7 @@ pipeline {
             steps {
                 //sh("git clone https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd-team1.git argocd-team1-repo")
                 sh 'cd argocd-team1'
+                sh 'pwd'
                 sh 'sed -i "s|image: .*|image: team1/test:$BUILD_NUMBER|" Kub_pierre/nginx.yaml'
                 sh 'git add Kub_pierre/nginx.yaml'
                 sh 'git commit -m "new deployment"'
