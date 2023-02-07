@@ -1,14 +1,5 @@
 pipeline {
     agent any 
-
-    options {
-    skipDefaultCheckout true
-    }
-    triggers {
-        pollSCM('H/5 * * * *') {
-        paths('Jenkinsfile')
-        }
-    }
     environment{
         ACR_CRED = credentials('acr_creds')
         GIT_CRED = credentials('2eb747c4-f19f-4601-ab83-359462e62482')
@@ -25,40 +16,24 @@ pipeline {
                 //sh 'docker build -t devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT .'
                 //sh 'docker push devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'
                 //sh 'docker rmi devops2022.azurecr.io/pierre_nginx:$GIT_COMMIT'
-                sh 'docker build -t devops2022.azurecr.io/pierre/test:$BUILD_NUMBER .'
+                sh 'docker build -t devops2022.azurecr.io/team1/test:$BUILD_NUMBER .'
             }
         }
 
         stage('Image Pushing'){
             steps{
-                sh 'docker push devops2022.azurecr.io/pierre/test:$BUILD_NUMBER'
+                sh 'docker push devops2022.azurecr.io/team1/test:$BUILD_NUMBER'
             }
         }
-
-        //stage('Clone ManifestRepo'){
-            //steps {
-                //withCredentials([usernamePassword(credentialsId: '2eb747c4-f19f-4601-ab83-359462e62482', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                //sh 'git remote set-url origin https://Pierre890:{password}@github.com/{username}/project.git'
-                //sh 'git clone https://github.com/Brights-DevOps-2022-Script/argocd.git'
-                //}
-            //}
-        //}
 
         stage('Update Deployment') {
             steps {
-                sh 'cd deployment'
-                sh 'sed -i "s|image: .*|image: pierre/test:$BUILD_NUMBER|" deployment/nginx.yaml'
-            }
-        }
-
-        stage('Commit Changes') {
-            steps {
-                //sh 'git config user.email "pierfrancesco.elia89@gmail.com"'
-                //sh 'git config user.name "Pierre890"'
-                sh 'git add deployment/nginx.yaml'
-                sh 'git commit -m "Update deployment with new image"'
-                sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/Pierre_Repo_Ber.git HEAD:main")
-            }
+                sh 'cd ..'
+                sh 'cd argocd-team1'
+                sh 'sed -i "s|image: .*|image: pierre/test:$BUILD_NUMBER|" Kub_pierre/nginx.yaml'
+                sh 'git add Kub_pierre/nginx.yaml'
+                sh 'git commit -m "new deployment"'
+                sh("git push https://$GIT_CRED_USR:$GIT_CRED_PSW@github.com/Brights-DevOps-2022-Script/argocd-team1.git HEAD:main")
         }
     
         //stage('Deploy') {
